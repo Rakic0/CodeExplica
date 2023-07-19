@@ -1,0 +1,25 @@
+@import '../../style/utils/var.scss';
+
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &__svg {
+    width: 40rem;
+  }
+
+  &__form {
+    margin-top: -16rem;
+
+    span {
+      display: block;
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: $color-white;
+      margin: 1rem 0;
+    }
+  }
+}

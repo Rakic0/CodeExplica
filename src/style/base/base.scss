@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Poppins', sans-serif;
+  font-size: calc(100vw / 1920 * 10);
+}
+
+body {
+  background-color: $color-black;
+}
+
+::selection {
+  background-color: rgba($color-pink, 0.4);
+}

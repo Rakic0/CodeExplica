@@ -1,0 +1,16 @@
+.icon {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.nested-files {
+  display: block;
+  margin: 1rem 0rem 0 2rem;
+}

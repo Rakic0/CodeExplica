@@ -1,0 +1,28 @@
+@import '../../style/utils/var.scss';
+
+.sign-in-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &__svg {
+    width: 50rem;
+  }
+
+  &__buttons {
+    &__divider {
+      color: $color-white;
+      font-size: 1.6rem;
+    }
+
+    &__container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+
+      margin-top: -7rem;
+    }
+  }
+}

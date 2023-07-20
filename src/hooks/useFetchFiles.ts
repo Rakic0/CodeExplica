@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import axios from 'axios';
+import axios from "axios";
+import { GithubFile } from "../utils/types";
 
 export const useFetch = async (url: string) => {
   return await axios.get(url, {
-    method: 'GET',
+    method: "GET",
     headers: {
       Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
     },
@@ -20,14 +21,16 @@ const useFetchFiles = async (
   try {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const response = await useFetch(url);
-    const { data }: { data: File[] } = response;
+    const { data }: { data: GithubFile[] } = response;
 
     return data;
   } catch (error) {
+    const errorMessage = (error as Error).message;
+
     console.error(
-      `Repository can not be found. Please check your URL.\nError message: ${error.message}`
+      `Repository can not be found. Please check your URL.\nError message: ${errorMessage}`
     );
-    alert('Repository can not be found. Please check your URL.');
+    alert("Repository can not be found. Please check your URL.");
   }
 };
 

@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import "./scss/File.scss";
 import { FC, useState } from "react";
 import { GithubFile } from "../utils/types";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useDispatch } from "react-redux";
 import { setCode } from "../features/code/codeSlice";
 import useFetchFiles from "../hooks/useFetchFiles";
@@ -23,9 +24,16 @@ const File: FC<FileProps> = ({ file, repoData }) => {
 
   const handleClick = async () => {
     if (file.type === "file") {
-      const { data }: { data: string | null } = await axios.get(
-        file.download_url
-      );
+      let data = "";
+
+      try {
+        const response: AxiosResponse<string | null> = await axios.get(
+          file.download_url
+        );
+        data = response.data || "";
+      } catch (error) {
+        console.error(error);
+      }
 
       if (typeof data !== "string") {
         dispatch(setCode(`// Can't load that file type.`));
@@ -39,10 +47,19 @@ const File: FC<FileProps> = ({ file, repoData }) => {
     if (file.type === "dir") {
       const baseUrl = `https://api.github.com/repos/${repoData.owner}/${repoData.repo}/contents/`;
       const url = new URL(file.path, baseUrl);
+      try {
+        const data = await useFetchFiles(
+          repoData.owner,
+          repoData.repo,
+          url.href
+        );
+        setNestedFiles(data ?? []);
+        setShow((prev) => !prev);
+      } catch (error) {
+        const errorMessage = (error as Error).message;
 
-      const data = await useFetchFiles(repoData.owner, repoData.repo, url);
-      setNestedFiles(data);
-      setShow((prev) => !prev);
+        console.error(`Error fetching nested files: ${errorMessage}`);
+      }
     }
   };
 

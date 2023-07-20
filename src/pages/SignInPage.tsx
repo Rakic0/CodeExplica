@@ -1,6 +1,6 @@
-import { ReactComponent as SVG } from '../assets/sign-in-page-svg.svg';
-import Button from '../components/Button';
-import './scss/SignInPage.scss';
+import { ReactComponent as SVG } from "../assets/sign-in-page-svg.svg";
+import Button from "../components/Button";
+import "./scss/SignInPage.scss";
 
 const SignInPage = () => {
   return (

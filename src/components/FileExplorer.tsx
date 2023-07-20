@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import File from "./File";
 import { FC } from "react";
 import "./scss/FileExplorer.scss";
@@ -13,13 +12,17 @@ const FileExplorer: FC = () => {
 
   if (type === "code") return <div className="file-explorer"></div>;
 
+  const owner = repoData?.owner ?? "";
+  const repo = repoData?.repo ?? "";
+  const data = content as GithubFile[];
+
   return (
     <div className="file-explorer">
-      <div className="repo-name">{`${repoData?.owner}/${repoData?.repo}`}</div>
+      <div className="repo-name">{`${owner}/${repo}`}</div>
       <ul>
-        {content.map((file: GithubFile) => (
+        {data?.map((file: GithubFile) => (
           <li key={file.sha}>
-            <File file={file} repoData={repoData} />
+            <File file={file} repoData={{ owner, repo }} />
           </li>
         ))}
       </ul>

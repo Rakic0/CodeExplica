@@ -1,4 +1,3 @@
-import Button from "../components/Button";
 import FileExplorer from "../components/FileExplorer";
 import MonacoEditor from "../components/MonacoEditor";
 import "./scss/ExplainPage.scss";

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import { useEffect } from 'react';
-import './scss/Logo.scss';
-import { Link } from 'react-router-dom';
+import { useEffect } from "react";
+import "./scss/Logo.scss";
+import { Link } from "react-router-dom";
 
 const Logo = () => {
   let index = 0;
@@ -13,20 +13,21 @@ const Logo = () => {
     Math.floor(Math.random() * (max - min + 1)) + min;
 
   useEffect(() => {
-    const animate = (star: Element) => {
-      star.style.setProperty('--star-left', `${rand(-10, 100)}%`);
-      star.style.setProperty('--star-top', `${rand(-40, 80)}%`);
+    const animate = (star: HTMLElement) => {
+      star.style.setProperty("--star-left", `${rand(-10, 100)}%`);
+      star.style.setProperty("--star-top", `${rand(-40, 80)}%`);
 
-      star.style.animation = 'none';
+      star.style.animation = "none";
       star.offsetHeight;
-      star.style.animation = '';
+      star.style.animation = "";
     };
 
-    for (const star of document.getElementsByClassName('magic-star')) {
+    for (const star of document.getElementsByClassName("magic-star")) {
+      const fStar = star as HTMLElement;
       setTimeout(() => {
-        animate(star);
+        animate(fStar);
 
-        setInterval(() => animate(star), 1000);
+        setInterval(() => animate(fStar), 1000);
       }, index++ * (interval / 3));
     }
   }, []);

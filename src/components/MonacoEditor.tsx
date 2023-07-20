@@ -1,4 +1,7 @@
-import { Editor } from "@monaco-editor/react";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { Editor, OnMount } from "@monaco-editor/react";
 import { FC, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
@@ -9,21 +12,21 @@ const MonacoEditor: FC = () => {
   const type = useSelector((state: RootState) => state.data.type);
   const content = useSelector((state: RootState) => state.data.content);
   const code = useSelector((state: RootState) => state.code.content);
-  let initalValue: string;
+  let initalValue = "// Click on files on your left side.";
 
-  const editorRef = useRef<object>(null);
+  const editorRef = useRef<any>();
 
   if (type === "code") {
-    initalValue = content;
+    initalValue = content as string;
   }
 
   useEffect(() => {
-    if (loaded) {
-      editorRef.current.setValue(code);
+    if (loaded && editorRef.current && type === "repo") {
+      editorRef.current?.setValue(code);
     }
-  }, [code, loaded]);
+  }, [code, loaded, type]);
 
-  const handleEditorDidMount = (editor, _) => {
+  const handleEditorDidMount: OnMount = (editor) => {
     editorRef.current = editor;
     setLoaded(true);
   };
@@ -40,13 +43,11 @@ const MonacoEditor: FC = () => {
   };
 
   const options = {
-    autoIndent: "full",
     contextmenu: true,
     fontFamily: "monospace",
     fontSize: 15,
     lineHeight: 24,
     hideCursorInOverviewRuler: true,
-    matchBrackets: "always",
     minimap: {
       enabled: false,
     },
@@ -57,7 +58,6 @@ const MonacoEditor: FC = () => {
     selectOnLineNumbers: true,
     roundedSelection: false,
     readOnly: false,
-    cursorStyle: "line",
     automaticLayout: true,
   };
 
@@ -68,9 +68,7 @@ const MonacoEditor: FC = () => {
         height="90vh"
         defaultLanguage="javascript"
         theme="vs-dark"
-        defaultValue={
-          initalValue ? initalValue : "// Click on files on your left side"
-        }
+        defaultValue={initalValue}
         width={"82vw"}
         options={options}
       />

@@ -6,8 +6,8 @@ export type GithubFile = {
   url: string;
   html_url: string;
   git_url: string;
-  download_url: string | null;
-  type: 'dir' | 'file';
+  download_url: string;
+  type: "dir" | "file";
   _links: {
     self: string;
     git: string;

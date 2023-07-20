@@ -31,22 +31,29 @@ const Form: FC<FormProps> = ({ type }) => {
 
     if (type === "repo") {
       const [owner, repo] = parseLink(value);
-      const data = await useFetchFiles(owner, repo);
 
-      const sortedData = sortByType(data);
+      try {
+        const data = await useFetchFiles(owner, repo);
 
-      dispatch(
-        setData({
-          type: "repo",
-          content: sortedData,
-          repoData: {
-            owner,
-            repo,
-          },
-        })
-      );
+        if (!data) return;
 
-      return navigate(`/explain/${repo}`);
+        const sortedData = sortByType(data);
+
+        dispatch(
+          setData({
+            type: "repo",
+            content: sortedData,
+            repoData: {
+              owner,
+              repo,
+            },
+          })
+        );
+
+        return navigate(`/explain/${repo}`);
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     if (type === "code") {

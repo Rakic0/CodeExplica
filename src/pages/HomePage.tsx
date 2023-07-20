@@ -1,8 +1,7 @@
-import { ReactComponent as SVG } from '../assets/home-svg.svg';
-import Form from '../components/Form';
-import { ExplainDataType } from '../utils/types';
-import './scss/HomePage.scss';
-import { FC } from 'react';
+import { ReactComponent as SVG } from "../assets/home-svg.svg";
+import Form from "../components/Form";
+import "./scss/HomePage.scss";
+import { FC } from "react";
 
 const HomePage: FC = () => {
   return (

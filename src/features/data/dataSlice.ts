@@ -1,9 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { GithubFile } from "../../utils/types";
 
 export interface DataState {
-  type: 'repo' | 'code' | null;
-  content: File[] | string | null;
+  type: "repo" | "code" | null;
+  content: GithubFile[] | string | null;
   repoData?: {
     owner: string | null;
     repo: string | null;
@@ -20,7 +21,7 @@ const initialState: DataState = {
 };
 
 export const dataSlice = createSlice({
-  name: 'data',
+  name: "data",
   initialState,
   reducers: {
     setData: (state, action: PayloadAction<DataState>) => {

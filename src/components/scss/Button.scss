@@ -1,4 +1,4 @@
-@import '../../style/utils/var.scss';
+@import "../../style/utils/var.scss";
 
 .button {
   color: $color-black;
@@ -10,7 +10,19 @@
   border: 0;
   cursor: pointer;
 
+  &:hover {
+    background-color: lighten($color-orange, $amount: 10);
+  }
+
   &:active {
     background-color: darken($color-orange, $amount: 10);
   }
+}
+
+.explain-button {
+  position: absolute;
+  bottom: 2rem;
+  right: 4rem;
+  font-size: 2.4rem;
+  padding: 1.4rem 4rem;
 }

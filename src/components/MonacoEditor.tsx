@@ -1,7 +1,8 @@
-import { Editor } from '@monaco-editor/react';
-import { FC, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../app/store';
+import { Editor } from "@monaco-editor/react";
+import { FC, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
+import Button from "./Button";
 
 const MonacoEditor: FC = () => {
   const [loaded, setLoaded] = useState(false);
@@ -10,9 +11,9 @@ const MonacoEditor: FC = () => {
   const code = useSelector((state: RootState) => state.code.content);
   let initalValue: string;
 
-  const editorRef = useRef<any>(null);
+  const editorRef = useRef<object>(null);
 
-  if (type === 'code') {
+  if (type === "code") {
     initalValue = content;
   }
 
@@ -27,16 +28,27 @@ const MonacoEditor: FC = () => {
     setLoaded(true);
   };
 
+  const handleGetSelectedText = () => {
+    if (editorRef.current) {
+      const editorInstance = editorRef.current;
+      const selectedText = editorInstance
+        .getModel()
+        .getValueInRange(editorInstance.getSelection());
+
+      console.log("Selected Text:", selectedText);
+    }
+  };
+
   const options = {
-    autoIndent: 'full',
+    autoIndent: "full",
     contextmenu: true,
-    fontFamily: 'monospace',
+    fontFamily: "monospace",
     fontSize: 15,
     lineHeight: 24,
     hideCursorInOverviewRuler: true,
-    matchBrackets: 'always',
+    matchBrackets: "always",
     minimap: {
-      enabled: true,
+      enabled: false,
     },
     scrollbar: {
       horizontalSliderSize: 4,
@@ -45,22 +57,27 @@ const MonacoEditor: FC = () => {
     selectOnLineNumbers: true,
     roundedSelection: false,
     readOnly: false,
-    cursorStyle: 'line',
+    cursorStyle: "line",
     automaticLayout: true,
   };
 
   return (
-    <Editor
-      onMount={handleEditorDidMount}
-      height="90vh"
-      defaultLanguage="typescript"
-      theme="vs-dark"
-      defaultValue={
-        initalValue ? initalValue : '// Click on files on your left side'
-      }
-      width={'82vw'}
-      options={options}
-    />
+    <>
+      <Editor
+        onMount={handleEditorDidMount}
+        height="90vh"
+        defaultLanguage="javascript"
+        theme="vs-dark"
+        defaultValue={
+          initalValue ? initalValue : "// Click on files on your left side"
+        }
+        width={"82vw"}
+        options={options}
+      />
+      <Button className="explain-button" onClick={handleGetSelectedText}>
+        Explain
+      </Button>
+    </>
   );
 };
 

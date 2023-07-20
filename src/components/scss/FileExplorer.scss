@@ -1,4 +1,4 @@
-@import '../../style/utils/var.scss';
+@import "../../style/utils/var.scss";
 
 .file-explorer {
   height: 90vh;
@@ -22,6 +22,20 @@
 
   &::-webkit-scrollbar-thumb:hover {
     background: darken($color-white, 20);
+  }
+
+  .repo-name {
+    font-size: 2rem;
+    color: $color-white;
+    font-weight: 700;
+    text-align: center;
+
+    border-bottom: 1px solid $color-white;
+    padding-bottom: 1rem;
+  }
+
+  ul {
+    margin-top: 1.5rem;
   }
 
   li {

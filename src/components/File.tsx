@@ -1,15 +1,12 @@
-import { FC, useState } from 'react';
-import { GithubFile } from '../utils/types';
-import {
-  getIconForFile,
-  getIconForFolder,
-  getIconForOpenFolder,
-} from 'vscode-icons-js';
-import './scss/File.scss';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { setCode } from '../features/code/codeSlice';
-import useFetchFiles from '../hooks/useFetchFiles';
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import "./scss/File.scss";
+import { FC, useState } from "react";
+import { GithubFile } from "../utils/types";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setCode } from "../features/code/codeSlice";
+import useFetchFiles from "../hooks/useFetchFiles";
+import FileIcon from "./FileIcons";
 
 interface FileProps {
   file: GithubFile;
@@ -24,27 +21,13 @@ const File: FC<FileProps> = ({ file, repoData }) => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
-  let icon;
-
-  if (file.type === 'dir') {
-    icon = getIconForFolder(file.name);
-
-    if (icon === 'folder_type_hook.svg') {
-      icon = 'default_folder.svg';
-    }
-  }
-
-  if (file.type === 'file') {
-    icon = getIconForFile(file.name);
-  }
-
   const handleClick = async () => {
-    if (file.type === 'file') {
+    if (file.type === "file") {
       const { data }: { data: string | null } = await axios.get(
         file.download_url
       );
 
-      if (typeof data !== 'string') {
+      if (typeof data !== "string") {
         dispatch(setCode(`// Can't load that file type.`));
         return;
       }
@@ -53,7 +36,7 @@ const File: FC<FileProps> = ({ file, repoData }) => {
       return;
     }
 
-    if (file.type === 'dir') {
+    if (file.type === "dir") {
       const baseUrl = `https://api.github.com/repos/${repoData.owner}/${repoData.repo}/contents/`;
       const url = new URL(file.path, baseUrl);
 
@@ -66,14 +49,10 @@ const File: FC<FileProps> = ({ file, repoData }) => {
   return (
     <>
       <div className="wrapper" onClick={handleClick}>
-        <img
-          src={`/src/assets/icons/${icon ? icon : ''}`}
-          alt={`Icon for ${file.name}`}
-          className="icon"
-        />
+        <FileIcon file={file} className="icon" open={show} />
         <span>{file.name}</span>
       </div>
-      {file.type === 'dir' && show ? (
+      {file.type === "dir" && show ? (
         <div className="nested-files">
           <ul>
             {nestedFiles.map((file) => (
@@ -84,7 +63,7 @@ const File: FC<FileProps> = ({ file, repoData }) => {
           </ul>
         </div>
       ) : (
-        ''
+        ""
       )}
     </>
   );

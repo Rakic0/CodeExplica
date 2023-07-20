@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import './scss/Form.scss';
-import { useState, FC } from 'react';
-import Button from './Button';
-import { useNavigate } from 'react-router-dom';
-import parseLink from '../utils/parseLink';
-import useFetchFiles from '../hooks/useFetchFiles';
-import { useDispatch } from 'react-redux';
-import { setData } from '../features/data/dataSlice';
-import sortByType from '../utils/sortByType';
+import "./scss/Form.scss";
+import { useState, FC } from "react";
+import Button from "./Button";
+import { useNavigate } from "react-router-dom";
+import parseLink from "../utils/parseLink";
+import useFetchFiles from "../hooks/useFetchFiles";
+import { useDispatch } from "react-redux";
+import { setData } from "../features/data/dataSlice";
+import sortByType from "../utils/sortByType";
 
 interface FormProps {
-  type: 'repo' | 'code';
+  type: "repo" | "code";
 }
 
 const Form: FC<FormProps> = ({ type }) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ const Form: FC<FormProps> = ({ type }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (type === 'repo') {
+    if (type === "repo") {
       const [owner, repo] = parseLink(value);
       const data = await useFetchFiles(owner, repo);
 
@@ -37,7 +37,7 @@ const Form: FC<FormProps> = ({ type }) => {
 
       dispatch(
         setData({
-          type: 'repo',
+          type: "repo",
           content: sortedData,
           repoData: {
             owner,
@@ -49,10 +49,10 @@ const Form: FC<FormProps> = ({ type }) => {
       return navigate(`/explain/${repo}`);
     }
 
-    if (type === 'code') {
+    if (type === "code") {
       dispatch(
         setData({
-          type: 'code',
+          type: "code",
           content: value,
         })
       );
@@ -64,7 +64,7 @@ const Form: FC<FormProps> = ({ type }) => {
   return (
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form onSubmit={(e) => handleSubmit(e)}>
-      {type === 'repo' ? (
+      {type === "repo" ? (
         <input
           type="text"
           placeholder="Repository URL"

@@ -19,7 +19,6 @@ const useFetchFiles = async (
   url = `https://api.github.com/repos/${owner}/${repoName}/contents`
 ) => {
   try {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const response = await useFetch(url);
     const { data }: { data: GithubFile[] } = response;
 

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -6,12 +8,18 @@ import { FC, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import Button from "./Button";
+import explain from "../utils/explain";
+import { useDispatch } from "react-redux";
+import { setExplain, setFetched } from "../features/explained/explainedSlice";
 
 const MonacoEditor: FC = () => {
   const [loaded, setLoaded] = useState(false);
+
+  const dispatch = useDispatch();
   const type = useSelector((state: RootState) => state.data.type);
   const content = useSelector((state: RootState) => state.data.content);
   const code = useSelector((state: RootState) => state.code.content);
+
   let initalValue = "// Click on files on your left side.";
 
   const editorRef = useRef<any>();
@@ -31,14 +39,18 @@ const MonacoEditor: FC = () => {
     setLoaded(true);
   };
 
-  const handleGetSelectedText = () => {
+  const handleOnClick = async () => {
     if (editorRef.current) {
+      dispatch(setFetched(true));
+
       const editorInstance = editorRef.current;
-      const selectedText = editorInstance
+      const selectedText: string = editorInstance
         .getModel()
         .getValueInRange(editorInstance.getSelection());
 
-      console.log("Selected Text:", selectedText);
+      const explainData = await explain(selectedText);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      dispatch(setExplain(explainData?.choices[0].message.content));
     }
   };
 
@@ -68,11 +80,12 @@ const MonacoEditor: FC = () => {
         height="90vh"
         defaultLanguage="javascript"
         theme="vs-dark"
+        width={"64vw"}
         defaultValue={initalValue}
-        width={"82vw"}
         options={options}
       />
-      <Button className="explain-button" onClick={handleGetSelectedText}>
+
+      <Button className="explain-button" onClick={handleOnClick}>
         Explain
       </Button>
     </>

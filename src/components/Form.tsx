@@ -8,6 +8,7 @@ import useFetchFiles from "../hooks/useFetchFiles";
 import { useDispatch } from "react-redux";
 import { setData } from "../features/data/dataSlice";
 import sortByType from "../utils/sortByType";
+import { AiOutlineArrowRight } from "react-icons/ai";
 
 interface FormProps {
   type: "repo" | "code";
@@ -72,13 +73,18 @@ const Form: FC<FormProps> = ({ type }) => {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form onSubmit={(e) => handleSubmit(e)}>
       {type === "repo" ? (
-        <input
-          type="text"
-          placeholder="Repository URL"
-          value={value}
-          onChange={(e) => onChange(e)}
-          required
-        />
+        <>
+          <input
+            type="text"
+            placeholder="Repository URL"
+            value={value}
+            onChange={(e) => onChange(e)}
+            required
+          />
+          <Button className="inputButton">
+            <AiOutlineArrowRight />
+          </Button>
+        </>
       ) : (
         <>
           <textarea

@@ -1,13 +1,7 @@
 @import "../../style/utils/var.scss";
 
-.monaco-wrapper {
+.explain-wrapper {
+  display: flex;
   position: absolute;
   bottom: 0;
-  right: 0;
-}
-
-.file-wrapper {
-  position: absolute;
-  bottom: 0;
-  left: 0;
 }

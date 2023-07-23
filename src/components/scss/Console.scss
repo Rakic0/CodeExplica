@@ -1,0 +1,41 @@
+@import "../../style/utils/var.scss";
+
+.console {
+  background-color: lighten($color-black, 6);
+  height: 90vh;
+  width: 18vw;
+  padding: 2rem;
+  overflow-y: scroll;
+  color: $color-white;
+
+  .heading {
+    font-size: 2rem;
+    color: $color-white;
+    font-weight: 700;
+    text-align: center;
+
+    border-bottom: 1px solid $color-white;
+    padding-bottom: 1rem;
+  }
+
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-black;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-white;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: darken($color-white, 20);
+  }
+
+  .console-body {
+    font-size: 1.6rem;
+    margin-top: 3.5rem;
+  }
+}

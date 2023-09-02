@@ -7,6 +7,7 @@ import parseLink from "../utils/parseLink";
 import useFetchFiles from "../hooks/useFetchFiles";
 import { useDispatch } from "react-redux";
 import { setData } from "../features/data/dataSlice";
+import { setCode } from "../features/code/codeSlice";
 import sortByType from "../utils/sortByType";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
@@ -32,6 +33,7 @@ const Form: FC<FormProps> = ({ type }) => {
 
     if (type === "repo") {
       const [owner, repo] = parseLink(value);
+      dispatch(setCode("// Click on files on your left side."));
 
       try {
         const data = await useFetchFiles(owner, repo);
